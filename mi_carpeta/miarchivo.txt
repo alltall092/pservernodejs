@@ -1,0 +1,1 @@
+Este es el contenido del archivo que se creará si no existe.
