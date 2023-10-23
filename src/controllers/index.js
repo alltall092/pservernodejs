@@ -1,2 +1,2 @@
-const {desencritarArchivo,recibirArchivo,generateAddres,redTangle}=require('./transferController');
-module.exports={desencritarArchivo,recibirArchivo,generateAddres,redTangle}
+const {desencritarArchivo,recibirArchivo,generateAddres,redTangle,encryptarArchivo,eliminar,eliminarByCheckbox}=require('./transferController');
+module.exports={desencritarArchivo,recibirArchivo,generateAddres,redTangle,encryptarArchivo,eliminar,eliminarByCheckbox}

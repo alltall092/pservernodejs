@@ -12,6 +12,7 @@ const options = {
   },
   apis: [
     "./src/routes/routeTransfer.js",
+    "./src/models/GuardarArchivo.Model.js",
   
     
 

@@ -1,93 +1,202 @@
 const {Router }=require('express');
 const router=Router();
-const {generateAddres,redTangle,recibirArchivo,desencritarArchivo}=require('../controllers');
-/**
+const multer = require('multer');
+const upload = multer();
+
+const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchivo,eliminar,eliminarByCheckbox}=require('../controllers');
+
+  /**
  * @swagger
  * /generateAddress:
+ *   get:
+ *     summary: Genera una dirección.
+ *     responses:
+ *       200:
+ *         description: Dirección generada con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Address'
+ */
+
+
+  /**
+/**
+ * @swagger
+ * /encryptado:
  *   post:
- *     summary: Genera una dirección IOTA a partir de un seed
- *     description: Genera una dirección IOTA válida a partir de un seed proporcionado.
+ *     summary: Cifrar un archivo utilizando una clave de cifrado.
+ *     description: Cifra un archivo utilizando el algoritmo AES-256-CBC.
+ *     tags:
+ *       - Archivo
  *     parameters:
- *       - name: body
+ *       - name: file
  *         in: body
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Contenido del archivo a cifrar.
+ *       - name: encryptionKey
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Clave de cifrado utilizada para cifrar el archivo.
+ *     responses:
+ *       200:
+ *         description: Archivo cifrado correctamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *       400:
+ *         description: Parámetros incorrectos o faltantes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
+/**
+ * @swagger
+ * /recibirArchivo:
+ *   get:
+ *     summary: Obtener todos los archivos guardados.
+ *     responses:
+ *       200:
+ *         description: Lista de archivos guardados.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Archivo'
+ */
+
+/**
+ * @swagger
+ * /eliminar:
+ *   delete:
+ *     summary: Eliminar un archivo por su ID.
+ *     parameters:
+ *       - in: body
+ *         name: id
+ *         required: true
+ *         description: ID del archivo a eliminar.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: El archivo se eliminó con éxito.
+ */
+/**
+ * @swagger
+ * /api/eliminar:
+ *   delete:
+ *     summary: Delete files based on selected IDs.
+ *     tags:
+ *       - File Management
+ *     parameters:
+ *       - in: body
+ *         name: requestBody
+ *         description: The request body containing an array of 'ids' to be deleted.
  *         required: true
  *         schema:
  *           type: object
  *           properties:
- *             seed:
- *               type: string
- *         description: El seed IOTA para generar la dirección.
+ *             ids:
+ *               type: array
+ *               items:
+ *                 type: integer
+ *               description: An array of file IDs to be deleted.
  *     responses:
  *       200:
- *         description: Dirección generada exitosamente.
- *       400:
- *         description: Faltan datos necesarios en la solicitud.
+ *         description: Files have been deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A success message.
  *       500:
- *         description: Error al generar la dirección.
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: An error message.
  */
-
-  
 /**
  * @swagger
  * /redTangle:
  *   post:
- *     summary: Encriptar y enviar un archivo a la red Tangle
- *     description: Encripta un archivo y lo envía a la red Tangle.
+ *     summary: Enviar una transacción a la red Tangle y desencriptar datos.
+ *     description: Envía una transacción a la red Tangle y luego desencripta datos con una clave de cifrado.
+ *     tags:
+ *       - Transacciones
  *     parameters:
- *       - name: file
- *         in: body
- *         description: Archivo a encriptar y enviar.
- *         required: true
- *         schema:
- *           type: string
  *       - name: address
  *         in: body
- *         description: Dirección en la red Tangle.
  *         required: true
  *         schema:
  *           type: string
+ *         description: Dirección de la cartera a la que se enviará la transacción.
  *       - name: encryptionKey
  *         in: body
- *         description: Clave de encriptación.
  *         required: true
  *         schema:
  *           type: string
- *     responses:
- *       200:
- *         description: Transacción enviada con éxito.
- *       400:
- *         description: Faltan datos necesarios en la solicitud.
- *       500:
- *         description: Error al procesar la solicitud.
- */
-/**
- * @swagger
- * /decryptFile:
- *   post:
- *     summary: Desencripta un archivo
- *     description: Desencripta un archivo utilizando una clave de encriptación proporcionada.
- *     parameters:
- *       - name: body
+ *         description: Clave de cifrado utilizada para desencriptar los datos.
+ *       - name: encrypted
  *         in: body
  *         required: true
  *         schema:
- *           type: object
- *           properties:
- *             encryptedFile:
- *               type: string
- *             encryptionKey:
- *               type: string
- *         description: Los datos encriptados del archivo y la clave de encriptación.
+ *           type: string
+ *         description: Datos cifrados que se desencriptarán.
+ *       - name: file
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Nombre del archivo asociado a la transacción.
  *     responses:
  *       200:
- *         description: Archivo desencriptado con éxito.
+ *         description: Transacción enviada con éxito y datos desencriptados.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 trytes:
+ *                   type: string
  *       500:
- *         description: Error al desencriptar el archivo.
+ *         description: Error al procesar la solicitud.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 error:
+ *                   type: string
  */
+
+
+
 
 router.get('/recibir',recibirArchivo);
 router.post('/decryptFile',desencritarArchivo);
 router.post('/generateAddress',generateAddres);
 router.post('/redTangle',redTangle);
-
+router.post('/encryptado',encryptarArchivo);
+router.get('/eliminar/:id',eliminar);
+router.delete('/eliminar',eliminarByCheckbox);
 module.exports=router;
