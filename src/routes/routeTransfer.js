@@ -7,7 +7,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
 
   /**
  * @swagger
- * api/v1/generateAddress:
+ * /api/v1/generateAddress:
  *   get:
  *     summary: Genera una dirección.
  *     responses:
@@ -23,7 +23,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
   /**
 /**
  * @swagger
- * api/v1/encryptado:
+ * /api/v1/encryptado:
  *   post:
  *     summary: Cifrar un archivo utilizando una clave de cifrado.
  *     description: Cifra un archivo utilizando el algoritmo AES-256-CBC.
@@ -64,7 +64,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
 
 /**
  * @swagger
- * api/v1/eliminar:
+ * /api/v1/eliminar:
  *   delete:
  *     summary: Eliminar un archivo por su ID.
  *     parameters:
@@ -80,7 +80,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
  */
 /**
  * @swagger
- * api/v1/eliminar:
+ * /api/v1/eliminar:
  *   delete:
  *     summary: Delete files based on selected IDs.
  *     tags:
@@ -122,7 +122,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
  */
 /**
  * @swagger
- * api/v1//redTangle:
+ * /api/v1/redTangle:
  *   post:
  *     summary: Enviar una transacción a la red Tangle y desencriptar datos.
  *     description: Envía una transacción a la red Tangle y luego desencripta datos con una clave de cifrado.
@@ -179,7 +179,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
  */
 /**
  * @swagger
- * api/v1/recibir:
+ * /api/v1/recibir:
  *   get:
  *     summary: Obtener la lista de archivos almacenados.
  *     description: Recupera la lista de archivos almacenados.
