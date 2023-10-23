@@ -60,18 +60,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
  *                   type: string
  */
 /**
- * @swagger
- * /recibirArchivo:
- *   get:
- *     summary: Obtener todos los archivos guardados.
- *     responses:
- *       200:
- *         description: Lista de archivos guardados.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Archivo'
- */
+
 
 /**
  * @swagger
@@ -188,7 +177,38 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
  *                 error:
  *                   type: string
  */
-
+/**
+ * @swagger
+ * /recibir:
+ *   get:
+ *     summary: Obtener la lista de archivos almacenados.
+ *     description: Recupera la lista de archivos almacenados.
+ *     responses:
+ *       200:
+ *         description: Lista de archivos almacenados.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   nombre:
+ *                     type: string
+ *                   tamaño:
+ *                     type: number
+ *                   fechaCreacion:
+ *                     type: string
+ *       500:
+ *         description: Error en el servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
 
 
 
