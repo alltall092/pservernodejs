@@ -211,7 +211,7 @@ const {generateAddres,redTangle,recibirArchivo,desencritarArchivo,encryptarArchi
  */
 
 
-
+// routes
 router.get('/recibir',recibirArchivo);
 router.post('/decryptFile',desencritarArchivo);
 router.post('/generateAddress',generateAddres);
